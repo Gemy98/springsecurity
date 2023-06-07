@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -22,20 +25,44 @@ public class SecurityConfiguration{
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User
-                .withUsername("ahmed")
-                .password(passwordEncoder().encode("ahmed123"))
+      /*  UserDetails user1 = User
+                .withUsername("gemy")
+                .password(passwordEncoder().encode("123"))
                 .roles("ADMIN")
                 .build();
 
         UserDetails user2 = User
-                .withUsername("karim")
-                .password(passwordEncoder().encode("karim123"))
-                .roles("USER")
+                .withUsername("ahmed")
+                .password(passwordEncoder().encode("123"))
+                .roles("MANAGER")
                 .build();
 
+        UserDetails user3 = User
+                .withUsername("karim")
+                .password(passwordEncoder().encode("123"))
+                .roles("USER")
+                .build();
+        */
 
-        return new InMemoryUserDetailsManager(user,user2);
+        List<UserDetails> users = new ArrayList<>();
+        users.add(User
+                .withUsername("gemy")
+                .password(passwordEncoder().encode("123"))
+                .roles("ADMIN")
+                .build());
+        users.add( User
+                .withUsername("ahmed")
+                .password(passwordEncoder().encode("123"))
+                .roles("MANAGER")
+                .build());
+        users.add( User
+                .withUsername("karim")
+                .password(passwordEncoder().encode("123"))
+                .roles("USER")
+                .build());
+
+
+        return new InMemoryUserDetailsManager(users);
     }
 
 
@@ -43,12 +70,19 @@ public class SecurityConfiguration{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .requestMatchers("/api/main").permitAll()
+                .requestMatchers("/api/profile").authenticated()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/manage").hasAnyRole("MANAGER","ADMIN")
+                //.anyRequest()
+                //.authenticated()
                 .and()
                 .httpBasic(withDefaults());
         return http.build();
     }
+
+
+
 
     @Bean
     PasswordEncoder passwordEncoder(){
