@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
    // http://localhost:8080/api/login
-    @GetMapping("login")
+    @GetMapping("/login")
     public String login(){
         return "login";
     }
