@@ -49,11 +49,13 @@ public class SecurityConfiguration{
                 .withUsername("gemy")
                 .password(passwordEncoder().encode("123"))
                 .roles("ADMIN")
+                .authorities("ACCESS_BASIC1")
                 .build());
         users.add( User
                 .withUsername("ahmed")
                 .password(passwordEncoder().encode("123"))
                 .roles("MANAGER")
+                .authorities("ACCESS_BASIC2")
                 .build());
         users.add( User
                 .withUsername("karim")
@@ -72,6 +74,8 @@ public class SecurityConfiguration{
                 .authorizeRequests()
                 .requestMatchers("/api/main").permitAll()
                 .requestMatchers("/api/profile").authenticated()
+                .requestMatchers("/api/basic/mybasic").hasAuthority("ACCESS_BASIC1")
+                .requestMatchers("/api/basic/allbasic").hasAuthority("ACCESS_BASIC2")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/manage").hasAnyRole("MANAGER","ADMIN")
                 //.anyRequest()
