@@ -48,14 +48,14 @@ public class SecurityConfiguration{
         users.add(User
                 .withUsername("gemy")
                 .password(passwordEncoder().encode("123"))
-                .roles("ADMIN")
-                .authorities("ACCESS_BASIC1")
+              //  .roles("ADMIN")
+                .authorities("ACCESS_BASIC1","ROLE_ADMIN")
                 .build());
         users.add( User
                 .withUsername("ahmed")
                 .password(passwordEncoder().encode("123"))
-                .roles("MANAGER")
-                .authorities("ACCESS_BASIC2")
+                //.roles("MANAGER")
+                .authorities("ACCESS_BASIC2","ROLE_MANAGER")
                 .build());
         users.add( User
                 .withUsername("karim")
