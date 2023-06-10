@@ -1,19 +1,16 @@
 package com.spring.springsecurity.db;
 
 import com.spring.springsecurity.dao.AuthoritiesRepository;
-import com.spring.springsecurity.dao.RoleRepository;
 import com.spring.springsecurity.dao.UserRepository;
 import com.spring.springsecurity.model.Authorities;
-import com.spring.springsecurity.model.Role;
 import com.spring.springsecurity.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
@@ -21,67 +18,46 @@ public class DBInit implements CommandLineRunner {
 
 
     private UserRepository userRepository ;
-    private RoleRepository roleRepository ;
 
     private AuthoritiesRepository authoritiesRepository ;
 
     @Autowired
-    public DBInit(UserRepository userRepository, RoleRepository roleRepository, AuthoritiesRepository authoritiesRepository) {
+    public DBInit(UserRepository userRepository , AuthoritiesRepository authoritiesRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.authoritiesRepository = authoritiesRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
+    private PasswordEncoder passwordEncoder ;
+
 
 
 
     @Override
     public void run(String... args) throws Exception {
 
-        User user = this.userRepository.findByUsername("Karim");
-        System.out.println(user.getAddress());
 
-        /*
+
         this.userRepository.deleteAll();
-            User admin=new User("Gemy","123","25","Mansoura",1);
-            admin.setRoles(this.roleRepository.findAll());
+            User admin=new User("Gemy",passwordEncoder.encode("123"),"25","Mansoura",1);
             admin.setAuthorities(this.authoritiesRepository.findAll());
             userRepository.save(admin);
         ///////////////////////////////////////////////////////////////////
-            User Manager=new User("ahmed","123","25","Cairo",1);
-            //Role managerRoles1 = roleRepository.findById(2L).get();
-            //Role managerRoles2 = roleRepository.findById(2L).get();
-            //Manager.setRoles(this.roleRepository.findById(2L).;
-            //Authorities managerAuthorities = authoritiesRepository.findById(2L).get();
-            //Manager.setAuthorities(this.authoritiesRepository.findAll());
-            //Manager.getRoles().add(managerRoles);
-            //Manager.getAuthorities().add(managerAuthorities);
-            List<Role> rolesManager =new ArrayList<>() ;
-            rolesManager.add(roleRepository.findById(2L).get());
-            rolesManager.add(roleRepository.findById(3L).get());
+            User Manager=new User("ahmed",passwordEncoder.encode("123"),"25","Cairo",1);
             List<Authorities> authoritiesManager = new ArrayList<>();
             authoritiesManager.add(authoritiesRepository.findById(2L).get());
             authoritiesManager.add(authoritiesRepository.findById(3L).get());
-            Manager.setRoles(rolesManager);
+            authoritiesManager.add(authoritiesRepository.findById(5L).get());
+            authoritiesManager.add(authoritiesRepository.findById(6L).get());
             Manager.setAuthorities(authoritiesManager);
             userRepository.save(Manager);
         ////////////////////////////////////////////////////////////////////////////////
-            User user=new User("Karim","123","25","Tanta",1);
-            //Role userRole = roleRepository.findById(3L).get();
-            //user.setRoles(this.roleRepository.findAll());
-            //Authorities userAuthorities = authoritiesRepository.findById(3L).get();
-            //user.setAuthorities(this.authoritiesRepository.findAll());
-            //user.getRoles().add(rolesUser);
-            //user.getAuthorities().add(authoritiesUser);
-            List<Role> rolesUser = new ArrayList<>();
-            rolesUser.add(roleRepository.findById(3L).get());
+            User user=new User("Karim",passwordEncoder.encode("123"),"25","Tanta",1);
             List<Authorities> authoritiesUser = new ArrayList<>();
             authoritiesUser.add(authoritiesRepository.findById(3L).get());
-            user.setRoles(rolesUser);
+            authoritiesUser.add(authoritiesRepository.findById(6L).get());
             user.setAuthorities(authoritiesUser);
             userRepository.save(user);
-
-
-         */
     }
 
 

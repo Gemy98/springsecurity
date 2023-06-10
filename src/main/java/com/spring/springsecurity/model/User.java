@@ -32,14 +32,6 @@ public class User {
     private int active ;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-            )
-    private List<Role> roles ;
-
     public User(String userName, String password, String age, String address, int active) {
         this.username = userName;
         this.password = password;
@@ -96,13 +88,6 @@ public class User {
         this.active = active;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 
     public List<Authorities> getAuthorities() {
         return authorities;
@@ -112,7 +97,7 @@ public class User {
         this.authorities = authorities;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_authorities",
             joinColumns = {@JoinColumn(name = "user_id")},

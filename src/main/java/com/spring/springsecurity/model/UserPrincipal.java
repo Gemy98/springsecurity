@@ -34,10 +34,7 @@ public class UserPrincipal implements UserDetails {
             GrantedAuthority authority = new SimpleGrantedAuthority(p.getAuthoritiesName());
             authorities.add((Authorities) authority);
         });
-        this.user.getRoles().forEach(p -> {
-            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" +p.getRoleName());
-            authorities.add((Authorities) authority);
-        });
+
        Collection c =  new HashSet<GrantedAuthority>(authorities.size());
 
 
