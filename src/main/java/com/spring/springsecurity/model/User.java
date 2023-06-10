@@ -1,11 +1,11 @@
 package com.spring.springsecurity.model;
 
 import jakarta.persistence.*;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 
+@Component
 @Entity
 @Table(name = "user")
 public class User {
@@ -17,7 +17,7 @@ public class User {
     private long  id ;
 
     @Column(name = "user_name")
-    private String userName ;
+    private String username;
 
     @Column(name = "password")
     private String password ;
@@ -41,7 +41,7 @@ public class User {
     private List<Role> roles ;
 
     public User(String userName, String password, String age, String address, int active) {
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
         this.age = age;
         this.address = address;
@@ -56,12 +56,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {
