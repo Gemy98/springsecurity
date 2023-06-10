@@ -1,8 +1,11 @@
 package com.spring.springsecurity.securityconfig;
 
+import com.spring.springsecurity.UserPrincipalDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,6 +26,15 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfiguration{
 
+    @Autowired
+    public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
+        this.userPrincipalDetailsService = userPrincipalDetailsService;
+    }
+
+    private  UserPrincipalDetailsService userPrincipalDetailsService ;
+
+
+/*
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
       /*  UserDetails user1 = User
@@ -44,8 +56,7 @@ public class SecurityConfiguration{
                 .build();
         */
 
-        List<UserDetails> users = new ArrayList<>();
-        users.add(User
+/*        users.add(User
                 .withUsername("gemy")
                 .password(passwordEncoder().encode("123"))
               //  .roles("ADMIN")
@@ -64,8 +75,18 @@ public class SecurityConfiguration{
                 .build());
 
 
-        return new InMemoryUserDetailsManager(users);
+     //   return new InMemoryUserDetailsManager(users);
+
     }
+*/
+    @Bean
+    DaoAuthenticationProvider authenticationProvider (){
+        DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);
+        return daoAuthenticationProvider ;
+    }
+
 
 
     @Bean
@@ -95,13 +116,15 @@ public class SecurityConfiguration{
     }
 
 
-/*
+
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("ahmed").password("ahmed123").roles("ADMIN").and()
-                .withUser("Karim").password("karim123").roles("USER");
+       // auth.inMemoryAuthentication()
+               // .withUser("ahmed").password("ahmed123").roles("ADMIN").and()
+               // .withUser("Karim").password("karim123").roles("USER");
+
+        auth.authenticationProvider(authenticationProvider());
 
     }
 
- */
+
 }
