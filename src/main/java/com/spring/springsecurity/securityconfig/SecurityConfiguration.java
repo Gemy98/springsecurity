@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +108,10 @@ public class SecurityConfiguration{
                 .loginProcessingUrl("/signin")
                 .usernameParameter("user")
                 .passwordParameter("pass")
-                .loginPage("/api/login");
+                .loginPage("/api/login")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/api/login");
         return http.build();
     }
 
