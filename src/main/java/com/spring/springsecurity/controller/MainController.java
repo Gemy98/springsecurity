@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("api")
+@RequestMapping("api/")
 // http://localhost:8080/api/
 public class MainController {
 
@@ -25,7 +25,7 @@ public class MainController {
 
 
     // http://localhost:8080/api/profile
-    @GetMapping("profile")
+    @GetMapping("/profile")
     public String profile(){
         return "profile/index";
     }
@@ -34,7 +34,7 @@ public class MainController {
     // http://localhost:8080/api/manage
     @GetMapping("manage")
     public String manage(){
-        return "/management/index";
+        return "management/index";
     }
 
 
@@ -42,14 +42,14 @@ public class MainController {
     // http://localhost:8080/api/admin
     @GetMapping("admin")
     public String admin(){
-        return "/admin/index";
+        return "admin/index";
     }
 
 
     // http://localhost:8080/api/admin/myadmin
     @GetMapping("admin/myadmin")
     public String myadmin(){
-        return "/admin/myadmin";
+        return "admin/myadmin";
     }
 
 }

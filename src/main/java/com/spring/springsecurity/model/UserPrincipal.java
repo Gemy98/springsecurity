@@ -5,14 +5,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 
-@Component
+@Service
 public class UserPrincipal implements UserDetails {
 
     @Autowired
@@ -29,16 +27,15 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        List<Authorities> authorities = new ArrayList<>();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         this.user.getAuthorities().forEach(p -> {
             GrantedAuthority authority = new SimpleGrantedAuthority(p.getAuthoritiesName());
-            authorities.add((Authorities) authority);
+            grantedAuthorities.add(authority);
         });
 
-       Collection c =  new HashSet<GrantedAuthority>(authorities.size());
+        System.out.println(grantedAuthorities);
 
-
-        return   c ;
+        return   grantedAuthorities ;
     }
 
     @Override
@@ -68,6 +65,14 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.user.getActive()==1;
+        try {
+            System.out.println("Found");
+            return this.user.getActive() == 1;
+
+        } catch (NullPointerException e) {
+            System.out.println("not FOUND");
+            return false;
+        }
+
     }
 }

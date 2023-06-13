@@ -3,6 +3,7 @@ package com.spring.springsecurity.model;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -103,6 +104,6 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "authorities_id")}
     )
-    private List<Authorities> authorities ;
+    private List<Authorities> authorities=new ArrayList<>() ;
 
 }

@@ -102,7 +102,8 @@ public class SecurityConfiguration{
                 //.anyRequest()
                 //.authenticated()
                 .and()
-                .httpBasic(withDefaults());
+               // .httpBasic(withDefaults());
+                .formLogin().loginPage("/api/login");
         return http.build();
     }
 
@@ -118,7 +119,7 @@ public class SecurityConfiguration{
 
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-       // auth.inMemoryAuthentication()
+                  // auth.inMemoryAuthentication()
                // .withUser("ahmed").password("ahmed123").roles("ADMIN").and()
                // .withUser("Karim").password("karim123").roles("USER");
 
