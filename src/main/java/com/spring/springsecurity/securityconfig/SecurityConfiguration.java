@@ -103,7 +103,11 @@ public class SecurityConfiguration{
                 //.authenticated()
                 .and()
                // .httpBasic(withDefaults());
-                .formLogin().loginPage("/api/login");
+                .formLogin()
+                .loginProcessingUrl("/signin")
+                .usernameParameter("user")
+                .passwordParameter("pass")
+                .loginPage("/api/login");
         return http.build();
     }
 
