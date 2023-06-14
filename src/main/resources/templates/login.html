@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments.html :: headerfiles">
+<head th:insert="~{fragments.html :: headerfiles}">
     <title>Log in</title>
 </head>
 <body>
@@ -17,7 +17,8 @@
                             invalid username and password
                         </div>
 
-                        <div th:if="${param.logout}" class="alert alert-success">
+                        <div th:if="${param.logout}" class="alert alert-success" >
+                            <h2 th:text="Loggedout=${'you are logged out'}"></h2>
                             you have been logged out
                         </div>
                         <!-- Login Controls -->

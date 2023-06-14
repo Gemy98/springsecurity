@@ -111,7 +111,8 @@ public class SecurityConfiguration{
                 .loginPage("/api/login")
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/api/login");
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/api/main");
         return http.build();
     }
 
